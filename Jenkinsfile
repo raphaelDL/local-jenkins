@@ -1,30 +1,32 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        string(name: 'USER', defaultValue: '', description: 'Leave blank and a generated user will be issued')
 
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+        password(name: 'PASSWORD', defaultValue: '', description: 'Leave blank and a generated password will be issued')
 
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+        string(name: 'MONGO_ROLES', defaultValue: '', description: 'Specify which roles shall be granted to the user')
 
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+        choice(name: 'CLUSTER', choices: ['DATAHUB', 'MONITORING'], description: 'Choose target cluster')
 
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        choice(name: 'ENV', choices: ['work.es', 'work.mx','live.es','live.mx'], description: 'Choose SEMaaS target environment')
 
-        file(name: "FILE", description: "Choose a file to upload")
+        text(name: 'REASON', defaultValue: '', description: 'Specify why this user is being created')
+
     }
     stages {
         stage('Example') {
             steps {
-                echo "Hello ${params.PERSON}"
-
-                echo "Biography: ${params.BIOGRAPHY}"
-
-                echo "Toggle: ${params.TOGGLE}"
-
-                echo "Choice: ${params.CHOICE}"
+                echo "Hello ${params.USER}"
 
                 echo "Password: ${params.PASSWORD}"
+
+                echo "Cluster Destination: ${params.CLUSTER}"
+
+                echo "Environment Destination: ${params.ENV}"
+
+                echo "Reason of Creation: ${params.REASON}"
+
             }
         }
     }
